@@ -25,8 +25,14 @@ func NewDecoder() *Decoder {
 var ErrNoPicture = errors.New("h264: no decodable picture found")
 
 // DecodeFirstFrame parses an Annex-B stream and returns the first decoded
-// picture (Frame). Parameter sets are accumulated along the way.
+// picture (Frame). Parameter sets are accumulated along the way. A picture may
+// be split into several slices (multi-slice); all slices of the first picture
+// are decoded into the same frame before returning.
 func (d *Decoder) DecodeFirstFrame(annexB []byte) (*h264.Frame, *h264.SliceHeader, error) {
+	var (
+		frame   *h264.Frame
+		lastHdr *h264.SliceHeader
+	)
 	for _, u := range nal.ParseAnnexB(annexB) {
 		switch u.Type {
 		case nal.TypeSPS:
@@ -38,8 +44,7 @@ func (d *Decoder) DecodeFirstFrame(annexB []byte) (*h264.Frame, *h264.SliceHeade
 				d.pps[p.ID] = p
 			}
 		case nal.TypeIDR, nal.TypeNonIDR:
-			ppsID := slicePPSID(u.RBSP)
-			pps := d.pps[ppsID]
+			pps := d.pps[slicePPSID(u.RBSP)]
 			if pps == nil {
 				continue
 			}
@@ -47,13 +52,28 @@ func (d *Decoder) DecodeFirstFrame(annexB []byte) (*h264.Frame, *h264.SliceHeade
 			if sps == nil {
 				continue
 			}
-			frame := h264.NewFrame(sps)
+			// Новая картинка (first_mb_in_slice==0 после уже декодированной) —
+			// возвращаем первую.
+			if frame != nil && sliceFirstMB(u.RBSP) == 0 {
+				return frame, lastHdr, nil
+			}
+			if frame == nil {
+				frame = h264.NewFrame(sps)
+			}
 			h, err := h264.DecodeSlice(u.RBSP, u.Type, u.RefIDC, sps, pps, frame)
 			if err != nil {
-				return nil, h, err
+				// Первый слайс упал — это ошибка; иначе вернём, что собрали
+				// (частичный кадр лучше пустого).
+				if lastHdr == nil {
+					return nil, h, err
+				}
+				return frame, lastHdr, nil
 			}
-			return frame, h, nil
+			lastHdr = h
 		}
+	}
+	if frame != nil {
+		return frame, lastHdr, nil
 	}
 	return nil, nil, ErrNoPicture
 }
@@ -65,4 +85,9 @@ func slicePPSID(rbsp []byte) uint32 {
 	r.UE() // first_mb_in_slice
 	r.UE() // slice_type
 	return r.UE()
+}
+
+// sliceFirstMB reads first_mb_in_slice (the first ue of the slice header).
+func sliceFirstMB(rbsp []byte) uint32 {
+	return bitstream.NewReader(rbsp).UE()
 }
