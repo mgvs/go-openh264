@@ -1,6 +1,6 @@
 package h264
 
-import "go-openh264/bitstream"
+import "github.com/mgvs/go-openh264/bitstream"
 
 // Canonical-codeword CAVLC decoding. The codeword tables in cavlc_canon.go are
 // the ISO/IEC 14496-10 variable-length codes; here they are turned into prefix

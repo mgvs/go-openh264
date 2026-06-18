@@ -3,7 +3,7 @@ package h264
 import (
 	"errors"
 
-	"go-openh264/bitstream"
+	"github.com/mgvs/go-openh264/bitstream"
 )
 
 // PPS is the Picture Parameter Set (ISO/IEC 14496-10), the fields

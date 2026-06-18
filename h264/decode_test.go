@@ -3,7 +3,7 @@ package h264
 import (
 	"testing"
 
-	"go-openh264/nal"
+	"github.com/mgvs/go-openh264/nal"
 )
 
 // align appends zero bits up to the byte boundary (pcm_alignment_zero_bit).

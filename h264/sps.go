@@ -4,7 +4,7 @@
 // phases.
 package h264
 
-import "go-openh264/bitstream"
+import "github.com/mgvs/go-openh264/bitstream"
 
 // SPS is the subset of the Sequence Parameter Set (ISO/IEC 14496-10)
 // needed for frame dimensions, chroma format and profile.

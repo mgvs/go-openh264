@@ -3,7 +3,7 @@ package h264
 import (
 	"testing"
 
-	"go-openh264/bitstream"
+	"github.com/mgvs/go-openh264/bitstream"
 )
 
 // bitsReader builds a reader from a string of '0'/'1' (MSB-first, as in the stream).

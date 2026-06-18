@@ -1,14 +1,14 @@
-// Package h264dec — a high-level end-to-end decoder: Annex-B stream → first frame.
+// Package openh264 — a high-level end-to-end decoder: Annex-B stream → first frame.
 // It wires the nal/h264 layers together and holds the active parameter sets.
 // It decodes only the first picture (decoding the first Annex-B H.264 frame).
-package main
+package openh264
 
 import (
 	"errors"
 
-	"go-openh264/bitstream"
-	"go-openh264/h264"
-	"go-openh264/nal"
+	"github.com/mgvs/go-openh264/bitstream"
+	"github.com/mgvs/go-openh264/h264"
+	"github.com/mgvs/go-openh264/nal"
 )
 
 // Decoder holds parsed SPS/PPS and decodes frames from an Annex-B stream.

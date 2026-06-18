@@ -3,7 +3,7 @@ package h264
 import (
 	"testing"
 
-	"go-openh264/nal"
+	"github.com/mgvs/go-openh264/nal"
 )
 
 // testSPS/testPPS are minimal parameter sets for testing slice header parsing.

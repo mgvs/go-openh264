@@ -1,6 +1,6 @@
 package h264
 
-import "go-openh264/bitstream"
+import "github.com/mgvs/go-openh264/bitstream"
 
 // mapCBP — mapping codeNum→coded_block_pattern (ChromaArrayType 1/2) from the
 // ISO/IEC 14496-10 specification. Column 0 — Intra (Intra_4x4/8x8), column 1 —

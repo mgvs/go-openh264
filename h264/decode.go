@@ -4,8 +4,8 @@ import (
 	"errors"
 	"os"
 
-	"go-openh264/bitstream"
-	"go-openh264/nal"
+	"github.com/mgvs/go-openh264/bitstream"
+	"github.com/mgvs/go-openh264/nal"
 )
 
 // Errors for unfinished decoder branches (expected at the current phase).

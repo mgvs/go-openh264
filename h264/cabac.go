@@ -1,6 +1,6 @@
 package h264
 
-import "go-openh264/bitstream"
+import "github.com/mgvs/go-openh264/bitstream"
 
 // CABAC arithmetic decoding engine (ISO/IEC 14496-10). Standard-spec variant:
 // 9-bit codIOffset, codIRange in [256,510], bit-by-bit renormalization. The

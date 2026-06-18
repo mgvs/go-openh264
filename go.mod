@@ -1,3 +1,3 @@
-module go-openh264
+module github.com/mgvs/go-openh264
 
-go 1.22
+go 1.25

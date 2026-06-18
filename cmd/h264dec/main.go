@@ -6,7 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"go-openh264/mp4"
+	openh264 "github.com/mgvs/go-openh264"
+	"github.com/mgvs/go-openh264/mp4"
 )
 
 // h264dec — a decoder test utility. It reads an Annex-B .264 stream or an
@@ -49,7 +50,7 @@ func main() {
 		}
 	}
 
-	frame, h, err := NewDecoder().DecodeFirstFrame(data)
+	frame, h, err := openh264.NewDecoder().DecodeFirstFrame(data)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "decode:", err)
 		os.Exit(1)

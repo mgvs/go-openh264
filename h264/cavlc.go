@@ -1,6 +1,6 @@
 package h264
 
-import "go-openh264/bitstream"
+import "github.com/mgvs/go-openh264/bitstream"
 
 // readLevelPrefix counts the leading zeros and consumes the trailing one
 // (level_prefix).

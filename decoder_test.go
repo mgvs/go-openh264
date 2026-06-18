@@ -1,4 +1,4 @@
-package main
+package openh264
 
 import (
 	"bytes"

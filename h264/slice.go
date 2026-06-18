@@ -3,8 +3,8 @@ package h264
 import (
 	"errors"
 
-	"go-openh264/bitstream"
-	"go-openh264/nal"
+	"github.com/mgvs/go-openh264/bitstream"
+	"github.com/mgvs/go-openh264/nal"
 )
 
 // SliceType is the slice type. Values 5..9 mean "all slices of the frame have

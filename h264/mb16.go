@@ -3,7 +3,7 @@ package h264
 import (
 	"errors"
 
-	"go-openh264/bitstream"
+	"github.com/mgvs/go-openh264/bitstream"
 )
 
 // Reconstruction of I-slice macroblocks (CAVLC). sliceDecoder keeps the
