@@ -85,6 +85,8 @@ func newSliceDecoder(r *bitstream.Reader, h *SliceHeader, sps *SPS, pps *PPS, fr
 		sd.nzCb = make([]uint8, sd.cw4*sd.ch4)
 		sd.nzCr = make([]uint8, sd.cw4*sd.ch4)
 	}
+	// transform_size_8x8_flag нужен обоим путям (High profile: CAVLC I_8x8 + деблок).
+	sd.mbTransform8x8 = make([]bool, frame.MbWidth*frame.MbHeight)
 	if pps.EntropyCodingMode {
 		n := frame.MbWidth * frame.MbHeight
 		sd.mbI4x4 = make([]bool, n)
@@ -94,7 +96,6 @@ func newSliceDecoder(r *bitstream.Reader, h *SliceHeader, sps *SPS, pps *PPS, fr
 		sd.cbfLumaDC = make([]bool, n)
 		sd.cbfCbDC = make([]bool, n)
 		sd.cbfCrDC = make([]bool, n)
-		sd.mbTransform8x8 = make([]bool, n)
 	}
 	return sd
 }
